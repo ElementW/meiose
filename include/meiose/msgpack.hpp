@@ -8,7 +8,7 @@
 namespace meiose {
 namespace msgpack {
 
-void write(std::ostringstream &oss, const variant &v);
+void write(std::ostream &oss, const variant &v);
 
 inline std::string write(const variant &v) {
   std::ostringstream oss;
@@ -16,9 +16,9 @@ inline std::string write(const variant &v) {
   return oss.str();
 }
 
-void read(std::istringstream &iss, variant &v);
+void read(std::istream &iss, variant &v);
 
-inline variant read(std::istringstream &iss) {
+inline variant read(std::istream &iss) {
   variant v;
   read(iss, v);
   return v;

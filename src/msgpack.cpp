@@ -8,7 +8,7 @@ namespace msgpack {
 
 using namespace endian;
 
-static void readMap(std::istringstream &iss, variant &v, size_t count) {
+static void readMap(std::istream &iss, variant &v, size_t count) {
   v.type(variant::Map);
   for (size_t i = 0; i < count; ++i) {
     variant key;
@@ -20,7 +20,7 @@ static void readMap(std::istringstream &iss, variant &v, size_t count) {
   }
 }
 
-static void readArray(std::istringstream &iss, variant &v, size_t count) {
+static void readArray(std::istream &iss, variant &v, size_t count) {
   v.type(variant::Array);
   variant::array &arr = v.getArray();
   arr.resize(count);
@@ -29,19 +29,19 @@ static void readArray(std::istringstream &iss, variant &v, size_t count) {
   }
 }
 
-static void readString(std::istringstream &iss, variant &v, size_t size) {
+static void readString(std::istream &iss, variant &v, size_t size) {
   v.type(variant::Str);
   v.getStr().resize(size, '\0');
   iss.read(&v.getStr()[0], static_cast<std::streamsize>(size));
 }
 
-static void readBin(std::istringstream &iss, variant &v, size_t size) {
+static void readBin(std::istream &iss, variant &v, size_t size) {
   v.type(variant::Bin);
   v.getBin().resize(size, 0);
   iss.read(reinterpret_cast<char*>(&v.getBin()[0]), static_cast<std::streamsize>(size));
 }
 
-static void readExt(std::istringstream &iss, variant &v, size_t size) {
+static void readExt(std::istream &iss, variant &v, size_t size) {
   v.type(variant::Ext);
   v.getExt().second.resize(size, 0);
   v.getExt().first = static_cast<int8_t>(iss.get());
@@ -54,12 +54,12 @@ static inline T bitcast(U u) {
   return b.to;
 }
 
-void read(std::istringstream &iss, variant &v) {
+void read(std::istream &iss, variant &v) {
   struct ISSException {
     // RAII-style "finally" handler to restore the input stream's exception settings
-    std::istringstream &iss;
+    std::istream &iss;
     std::ios_base::iostate exc;
-    ISSException(std::istringstream &iss) : iss(iss) {
+    ISSException(std::istream &iss) : iss(iss) {
       exc = iss.exceptions();
     }
     ~ISSException() {
@@ -203,7 +203,7 @@ void read(std::istringstream &iss, variant &v) {
   }
 }
 
-void write(std::ostringstream &oss, const variant &v) {
+void write(std::ostream &oss, const variant &v) {
   auto put = [&oss](auto c) { oss.put(static_cast<char>(c)); };
   auto put16 = [&oss](auto p) {
     static_assert(sizeof(p) == 2, "p isn't 2 bytes long");
