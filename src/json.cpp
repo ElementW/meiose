@@ -137,7 +137,7 @@ void write(std::ostringstream &oss, const variant &v, WriteFlags wf) {
       } else {
         oss << ',';
       }
-      if (wf & AllowNonStringObjectKeys && pair.first.type() != variant::Str) {
+      if (!(wf & AllowNonStringObjectKeys) && pair.first.type() != variant::Str) {
         throw not_encodable("Cannot encode non-string map key type into JSON");
       }
       write(oss, pair.first);
