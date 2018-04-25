@@ -16,6 +16,8 @@
 #ifndef MEIOSE_JSON_HPP
 #define MEIOSE_JSON_HPP
 
+#include <istream>
+#include <ostream>
 #include <sstream>
 
 #include "exceptions.hpp"
@@ -28,7 +30,7 @@ using WriteFlags = int;
 constexpr WriteFlags ByteXEscape = 1;
 constexpr WriteFlags AllowNonStringObjectKeys = 2;
 
-void write(std::ostringstream &oss, const variant &v, WriteFlags = 0);
+void write(std::ostream &oss, const variant &v, WriteFlags = 0);
 
 inline std::string write(const variant &v, WriteFlags wf = 0) {
   std::ostringstream oss;
@@ -42,9 +44,9 @@ constexpr ReadFlags ReplaceInvalidCodepoints = 1;
 constexpr ReadFlags IgnoreInvalidCodepoints = 2;
 constexpr ReadFlags EnforceStringObjectKeys = 4;
 
-void read(std::istringstream &iss, variant &v, ReadFlags = 0);
+void read(std::istream &iss, variant &v, ReadFlags = 0);
 
-inline variant read(std::istringstream &iss, ReadFlags rf = 0) {
+inline variant read(std::istream &iss, ReadFlags rf = 0) {
   variant v;
   read(iss, v, rf);
   return v;

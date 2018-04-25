@@ -16,6 +16,8 @@
 #ifndef MEIOSE_MSGPACK_HPP
 #define MEIOSE_MSGPACK_HPP
 
+#include <istream>
+#include <ostream>
 #include <sstream>
 
 #include "variant.hpp"

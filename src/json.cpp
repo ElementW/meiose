@@ -91,7 +91,7 @@ static const char *xescapechars[] = {
   "\\x1F"
 };
 
-void write(std::ostringstream &oss, const variant &v, WriteFlags wf) {
+void write(std::ostream &oss, const variant &v, WriteFlags wf) {
   switch (v.type()) {
   case variant::Nil:
     oss << "null";
@@ -222,14 +222,14 @@ void encodeUtf8(std::string &dest, int codepoint) {
   }
 }
 
-void read(std::istringstream &iss, variant &v, ReadFlags rf) {
+void read(std::istream &iss, variant &v, ReadFlags rf) {
   int c;
-  constexpr auto eof = std::istringstream::traits_type::eof();
+  constexpr auto eof = std::istream::traits_type::eof();
   struct ISSException {
     // RAII-style "finally" handler to restore the input stream's exception settings
-    std::istringstream &iss;
+    std::istream &iss;
     std::ios_base::iostate exc;
-    ISSException(std::istringstream &iss) : iss(iss) {
+    ISSException(std::istream &iss) : iss(iss) {
       exc = iss.exceptions();
     }
     ~ISSException() {
