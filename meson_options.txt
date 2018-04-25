@@ -1,0 +1,2 @@
+option('static', type: 'boolean', value: true)
+option('shared', type: 'boolean', value: false)
