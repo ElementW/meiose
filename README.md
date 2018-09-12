@@ -4,7 +4,7 @@ The core component of the library is the `meiose::variant`, a tagged union
 container supporting the types of the MessagePack specification.
 
 Use the `read` and `write` functions of the `msgpack` and `json` sub-namespaces
-to read and write from and to `std::{i,o}stringstream`, respectively.
+to read and write from and to `std::{i,o}stream`, respectively.
 
 meiose does *not* support streamed/partial reading or writing of values, it can
 only read them or write them all at once.
