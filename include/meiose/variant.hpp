@@ -614,6 +614,11 @@ public:
     if (not isExt()) throw std::runtime_error("Not an Ext");
     return v_ext;
   }
+  /* float cast is explicit because it loses precision over the stored
+   * floating-point number, not just range as with the integers */
+  explicit operator float() const noexcept {
+    return asNumber<float>();
+  }
   operator double() const noexcept {
     return asNumber<double>();
   }
