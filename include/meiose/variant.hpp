@@ -800,6 +800,13 @@ public:
     }
     v_arr.emplace_back(std::move(v));
   }
+
+  bool has(const variant &key) const {
+    if (isMap()) {
+      return v_map.count(key) == 1;
+    }
+    throw std::runtime_error("Not a map");
+  }
 };
 
 template<>
